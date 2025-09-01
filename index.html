@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Praveen Patel — Portfolio</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Remix Icon (icons) -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+  <!-- AOS (Animate On Scroll) -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --bg-2:#0d1426;
+      --surface:#101a2e;
+      --text:#e6edf6;
+      --muted:#9db0c7;
+      --accent:#00c2ff;
+      --accent-2:#3a86ff;
+      --glow: 0 0 24px rgba(0,194,255,.35), 0 0 48px rgba(0,194,255,.15);
+      --radius:16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.4);
+      --card-float: translateY(-6px);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 600px at 10% -10%, rgba(0,194,255,.08), transparent 60%),
+        radial-gradient(800px 500px at 110% 10%, rgba(58,134,255,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      overflow-x:hidden;
+    }
+
+    a{color:var(--text); text-decoration:none}
+    img{max-width:100%; display:block}
+
+    /* Navbar */
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter:saturate(140%) blur(8px);
+      background:linear-gradient(180deg, rgba(11,16,32,.9), rgba(11,16,32,.65));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav-inner{
+      max-width:1200px; margin:0 auto; padding:14px 20px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .brand{font-weight:800; letter-spacing:.5px}
+    .brand .dot{color:var(--accent)}
+    .nav a.link{color:var(--muted); margin:0 10px; font-weight:600}
+    .nav a.link:hover{color:var(--text)}
+    .nav .cta{
+      padding:10px 16px; border-radius:10px; margin-left:8px;
+      border:1px solid rgba(255,255,255,.12); color:var(--text)
+    }
+    .nav .cta.primary{
+      background:linear-gradient(180deg, var(--accent), #00a9de);
+      color:#091321; border:none; box-shadow:var(--glow)
+    }
+
+    /* Sections */
+    section{padding:80px 20px}
+    .wrap{max-width:1200px; margin:0 auto}
+
+    /* Hero split */
+    .hero{padding:100px 20px 80px}
+    .hero-grid{
+      display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center;
+    }
+    .kicker{color:var(--accent); font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:.9rem}
+    .title{font-size:clamp(32px, 6vw, 64px); line-height:1.05; margin:10px 0 14px}
+    .subtitle{font-size:clamp(16px, 2.4vw, 20px); color:var(--muted); max-width:620px}
+    .cta-row{display:flex; gap:14px; margin-top:28px; flex-wrap:wrap}
+    .btn{
+      padding:14px 18px; border-radius:12px; font-weight:700; letter-spacing:.3px; position:relative;
+      transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn.primary{background:linear-gradient(180deg, var(--accent), #00a9de); color:#091321; box-shadow:var(--glow)}
+    .btn.secondary{border:1px solid rgba(255,255,255,.16); color:var(--text); background:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.glow{animation:btnGlow 2.5s ease-in-out infinite}
+    @keyframes btnGlow{
+      0%,100%{box-shadow:0 0 0 rgba(0,0,0,0), var(--glow)}
+      50%{box-shadow:0 0 32px rgba(0,194,255,.35), 0 0 64px rgba(0,194,255,.18)}
+    }
+
+    .social{display:flex; gap:14px; margin-top:24px}
+    .social a{
+      width:40px; height:40px; display:grid; place-items:center; color:var(--accent);
+      background:rgba(0,194,255,.08); border:1px solid rgba(0,194,255,.22); border-radius:12px;
+      transition:transform .2s ease, box-shadow .2s ease, background .2s ease
+    }
+    .social a:hover{transform:translateY(-3px); box-shadow:var(--glow)}
+
+    .portrait{
+      position:relative; border-radius:24px; overflow:hidden; box-shadow:var(--shadow);
+      background:radial-gradient(600px 400px at 30% 20%, rgba(0,194,255,.18), transparent 60%);
+    }
+    .portrait img{filter:grayscale(.1) contrast(1.05) saturate(1.2) brightness(.9)}
+    .portrait:after{
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(120deg, rgba(0,194,255,.18), rgba(58,134,255,.06) 40%, transparent 70%);
+      mix-blend-mode:overlay; pointer-events:none;
+    }
+
+    /* Cards */
+    .grid{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:22px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:var(--radius); padding:22px; box-shadow:var(--shadow);
+      transform-style:preserve-3d; perspective:800px;
+      transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease, background .3s ease;
+      position:relative; overflow:hidden;
+    }
+    .card:hover{transform:translateY(-6px)}
+    .card .glow-ring{
+      position:absolute; inset:-2px; border-radius:inherit; pointer-events:none;
+      box-shadow:inset 0 0 40px rgba(0,194,255,.15), 0 0 40px rgba(0,194,255,.08);
+      opacity:.6; transition:opacity .2s ease;
+    }
+    .card:hover .glow-ring{opacity:1}
+
+    .card h3{margin:4px 0 8px}
+    .muted{color:var(--muted)}
+
+    /* Timeline (Education) */
+    .timeline{
+      display:grid; grid-template-columns:280px 1fr; gap:32px;
+    }
+    .timeline-sticky{position:sticky; top:80px; align-self:start}
+    .spine{
+      position:relative; height:100%; min-height:500px; width:6px; border-radius:999px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      box-shadow:inset 0 0 8px rgba(255,255,255,.08);
+    }
+    .spine .progress{
+      position:absolute; left:0; top:0; width:100%; height:0%;
+      background:linear-gradient(180deg, var(--accent), #00a9de);
+      box-shadow: 0 0 16px rgba(0,194,255,.6); border-radius:999px;
+    }
+    .edu-list{position:relative}
+    .edu-item{
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.10); border-radius:16px; padding:18px 18px 18px 24px; margin-bottom:18px;
+      transform:translateY(20px); opacity:0;
+    }
+    .edu-item.active{transform:translateY(0); opacity:1; transition:all .6s cubic-bezier(.2,.9,.2,1)}
+    .edu-item .dot{
+      position:absolute; left:-40px; margin-top:4px; width:18px; height:18px; border-radius:50%;
+      background:var(--bg-2); border:2px solid var(--accent); box-shadow:0 0 16px rgba(0,194,255,.35);
+    }
+    .edu-meta{display:flex; gap:8px; flex-wrap:wrap; color:var(--muted); font-weight:600; font-size:.95rem}
+
+    /* Lists */
+    .list{display:grid; gap:10px; margin:10px 0 0; color:var(--muted)}
+    .list li{line-height:1.6}
+
+    /* Footer */
+    footer{padding:40px 20px; color:var(--muted); border-top:1px solid rgba(255,255,255,.08); background:rgba(0,0,0,.15)}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero-grid{grid-template-columns:1fr}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .timeline{grid-template-columns:1fr}
+      .timeline-sticky{order:-1; margin-bottom:20px}
+    }
+    @media (max-width:640px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand">Praveen<span class="dot">.</span></div>
+      <div>
+        <a class="link" href="#home">Home</a>
+        <a class="link" href="#about">About</a>
+        <a class="link" href="#research">Research</a>
+        <a class="link" href="#projects">Projects</a>
+        <a class="link" href="#education">Education</a>
+        <a class="link" href="#contact">Contact</a>
+        <a class="cta" href="#links">Links</a>
+        <a class="cta primary" href="mailto:praveenp24@iitk.ac.in">Let’s Talk</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="kicker" data-aos="fade-up">CSE • IIT Kanpur</div>
+        <h1 class="title" data-aos="fade-up" data-aos-delay="60">Hi, I'm Praveen Patel</h1>
+        <p class="subtitle" data-aos="fade-up" data-aos-delay="120">
+          MSR student and AI/ML developer focused on Legal AI, Hybrid RAG, and knowledge graphs, with hands‑on deployment and analytical storytelling. 
+        </p>
+        <div class="cta-row" data-aos="fade-up" data-aos-delay="180">
+          <a class="btn primary glow" href="mailto:praveenp24@iitk.ac.in"><i class="ri-send-plane-line"></i> Hire Me</a>
+          <a class="btn secondary" href="tel:+919794138647"><i class="ri-phone-line"></i> Call</a>
+        </div>
+        <div class="social" data-aos="fade-up" data-aos-delay="240">
+          <!-- Per resume: textual links only; no URLs provided -->
+          <a href="#" title="Github (link text present in resume)"><i class="ri-github-line"></i></a>
+          <a href="#" title="LinkedIn (link text present in resume)"><i class="ri-linkedin-box-line"></i></a>
+          <a href="mailto:prav906715@gmail.com" title="Email"><i class="ri-mail-line"></i></a>
+        </div>
+      </div>
+
+      <div class="portrait" data-tilt data-tilt-max="8" data-tilt-speed="400" data-aos="zoom-in">
+        <!-- Royalty-free portrait (Unsplash) -->
+        <img alt="Portrait" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1200&auto=format&fit=crop" />
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="wrap">
+      <div class="grid">
+        <div class="card" data-tilt data-aos="fade-up">
+          <span class="glow-ring"></span>
+          <h3><i class="ri-flashlight-line" style="color:var(--accent)"></i> Focus</h3>
+          <p class="muted">Legal AI systems, Hybrid RAG, and knowledge graphs with efficient pipelines and evaluation frameworks.</p>
+        </div>
+        <div class="card" data-tilt data-aos="fade-up" data-aos-delay="80">
+          <span class="glow-ring"></span>
+          <h3><i class="ri-tools-line" style="color:var(--accent)"></i> Stack</h3>
+          <p class="muted">Python, JavaScript, React, Node, Express, HTML/CSS, Tailwind, MySQL, MongoDB, Git, LaTeX.</p>
+        </div>
+        <div class="card" data-tilt data-aos="fade-up" data-aos-delay="160">
+          <span class="glow-ring"></span>
+          <h3><i class="ri-trophy-line" style="color:var(--accent)"></i> Highlights</h3>
+          <p class="muted">GATE CS AIR 957 (2024), DA AIR 4146 (2024), CS AIR 4481 (2023); top‑14 IBPS & Namo‑Namah in BharatGen Hackathon.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Research -->
+  <section id="research">
+    <div class="wrap">
+      <h2 class="title" style="font-size:34px">Research</h2>
+
+      <!-- IBPS -->
+      <div class="card" data-tilt data-aos="fade-up">
+        <span class="glow-ring"></span>
+        <h3>Indian Bail Prediction System (IBPS) — MSR Thesis</h3>
+        <p class="muted">Guide: Prof. Arnab Bhattacharya</p>
+        <ul class="list">
+          <li>Curated 150,430 High Court judgments via one‑shot extraction + rule cleaning for large‑scale bail dataset.</li>
+          <li>Adapted Phi‑4 over structured attributes + retrieved statutes for 79% accuracy with clearer explanations.</li>
+          <li>Recall‑optimized inference using RAG over India Code; recall 0.78 and F1 0.58.</li>
+          <li>Web platform with chatbot integrating case details, acts, precedents.</li>
+        </ul>
+        <!-- Per resume: only these link texts exist -->
+        <p class="muted"><a href="#" class="btn secondary" style="padding:8px 12px">Demo</a> <a href="#" class="btn secondary" style="padding:8px 12px">arXiv</a></p>
+      </div>
+
+      <!-- Namo Namah -->
+      <div class="card" data-tilt data-aos="fade-up" data-aos-delay="90">
+        <span class="glow-ring"></span>
+        <h3>Namo Namah — MSR Thesis</h3>
+        <p class="muted">Guide: Prof. Arnab Bhattacharya</p>
+        <ul class="list">
+          <li>Multilingual AI agent for festivals/rituals using Hybrid RAG and Phi‑4 with sensitive guidance.</li>
+          <li>OCR + annotation across Hindi, English, Bangla, Marathi to structure rare texts.</li>
+          <li>Optimized retrieval (chunking, triplets, intelligent retriever) outperforming conventional systems in precision/recall.</li>
+        </ul>
+        <p class="muted"><a href="#" class="btn secondary" style="padding:8px 12px">Demo</a></p>
+      </div>
+
+      <!-- Crop Counsel -->
+      <div class="card" data-tilt data-aos="fade-up" data-aos-delay="180">
+        <span class="glow-ring"></span>
+        <h3>Crop Counsel — B.Tech Thesis</h3>
+        <p class="muted">Guide: Mr. Ashwani (Assistant Professor)</p>
+        <ul class="list">
+          <li>Crop recommendation with RF/XGBoost/CatBoost on soil & climate data; scalable deployment.</li>
+          <li>Plant disease detection via CNN fine‑tuning with augmentation & transfer learning.</li>
+          <li>Flask interface with EDA/FE/visualization to accelerate decisions.</li>
+        </ul>
+        <p class="muted"><a href="#" class="btn secondary" style="padding:8px 12px">Demo</a> <a href="#" class="btn secondary" style="padding:8px 12px">Report</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="wrap">
+      <h2 class="title" style="font-size:34px">Projects</h2>
+
+      <div class="grid">
+        <div class="card" data-tilt data-aos="fade-up">
+          <span class="glow-ring"></span>
+          <h3>QuerySite</h3>
+          <ul class="list">
+            <li>Hybrid RAG (Graph + Vector) with triplets via LLMs and MPNet/MiniLM embeddings.</li>
+            <li>Built KG from 9 satellite missions: 1,322 nodes, 3,381 edges in ArangoDB.</li>
+            <li>LLM‑as‑Judge eval: +5.1% relevance, +3.0% coverage vs Neo4j LLM Graph Builder.</li>
+          </ul>
+          <p class="muted"><a href="#" class="btn secondary" style="padding:8px 12px">Link</a></p>
+        </div>
+
+        <div class="card" data-tilt data-aos="fade-up" data-aos-delay="60">
+          <span class="glow-ring"></span>
+          <h3>Whatsapp Chat Analyzer</h3>
+          <ul class="list">
+            <li>Live broadcasting via OBS, real‑time chat with Socket.IO.</li>
+            <li>Auth, registration, and tested APIs for reliability (MERN).</li>
+          </ul>
+          <p class="muted"><a href="#" class="btn secondary" style="padding:8px 12px">Demo</a></p>
+        </div>
+
+        <div class="card" data-tilt data-aos="fade-up" data-aos-delay="120">
+          <span class="glow-ring"></span>
+          <h3>Bike Price Prediction</h3>
+          <ul class="list">
+            <li>Scraped 1,101 Quikr listings; dataset shared on Kaggle.</li>
+            <li>86% with Linear Regression; compared to QLattice (R² 0.73).</li>
+            <li>Deployed Streamlit app for instant estimates.</li>
+          </ul>
+          <p class="muted"><a href="#" class="btn secondary" style="padding:8px 12px">Demo</a></p>
+        </div>
+
+        <div class="card" data-tilt data-aos="fade-up" data-aos-delay="180">
+          <span class="glow-ring"></span>
+          <h3>Absolute Cinema (CS661)</h3>
+          <ul class="list">
+            <li>Interactive Streamlit analytics on 1M+ movie records.</li>
+            <li>Oscars, synergy, genre evolution, sentiment, finance modules.</li>
+            <li>Embeddings‑based recommender with caching & multithreading.</li>
+          </ul>
+        </div>
+
+        <div class="card" data-tilt data-aos="fade-up" data-aos-delay="240">
+          <span class="glow-ring"></span>
+          <h3>Incremental Learning with ViT (CS771)</h3>
+          <ul class="list">
+            <li>Sequential classification avoiding catastrophic forgetting.</li>
+            <li>Generative sampling from class distributions to retain performance.</li>
+            <li>95%+ retention on similar distributions; 80–92% accuracy on varied sets.</li>
+          </ul>
+        </div>
+
+        <div class="card" data-tilt data-aos="fade-up" data-aos-delay="300">
+          <span class="glow-ring"></span>
+          <h3>Applied Data Mining & Statistical Modeling (CS685)</h3>
+          <ul class="list">
+            <li>Time‑series of 1000+ Sanskrit words across 2700 years; Streamlit dictionary.</li>
+            <li>Tourism analytics: trends, modeling, entropy, and Covid‑19 impact.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education Timeline -->
+  <section id="education">
+    <div class="wrap">
+      <h2 class="title" style="font-size:34px">Education</h2>
+
+      <div class="timeline">
+        <div class="timeline-sticky">
+          <div class="spine">
+            <div class="progress" id="eduProgress"></div>
+          </div>
+        </div>
+
+        <div class="edu-list" id="eduList">
+          <!-- MSR -->
+          <div class="edu-item" data-aos="fade-up">
+            <span class="dot"></span>
+            <div class="edu-meta">2024–Present • MSR, Computer Science & Engineering • CPI 7.60/10</div>
+            <h3>Indian Institute of Technology, Kanpur</h3>
+          </div>
+
+          <!-- B.Tech -->
+          <div class="edu-item" data-aos="fade-up">
+            <span class="dot"></span>
+            <div class="edu-meta">2020–2024 • B.Tech, Computer Science & Engineering • CPI 9.18/10</div>
+            <h3>Gurukula Kangri (Deemed to be University), Haridwar</h3>
+          </div>
+
+          <!-- XII -->
+          <div class="edu-item" data-aos="fade-up">
+            <span class="dot"></span>
+            <div class="edu-meta">2018–2019 • Higher Secondary (XII) • 80.6%</div>
+            <h3>B.K. Convent Inter College, Lucknow</h3>
+          </div>
+
+          <!-- X -->
+          <div class="edu-item" data-aos="fade-up">
+            <span class="dot"></span>
+            <div class="edu-meta">2016–2017 • High School (X) • 85.17%</div>
+            <h3>B.K. Convent Inter College, Lucknow</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section>
+    <div class="wrap">
+      <h2 class="title" style="font-size:34px">Technical Skills</h2>
+      <div class="grid">
+        <div class="card" data-tilt data-aos="fade-up">
+          <span class="glow-ring"></span>
+          <h3>Languages</h3>
+          <p class="muted">C, C++, JavaScript, Python</p>
+        </div>
+        <div class="card" data-tilt data-aos="fade-up" data-aos-delay="70">
+          <span class="glow-ring"></span>
+          <h3>Databases</h3>
+          <p class="muted">MySQL, MongoDB</p>
+        </div>
+        <div class="card" data-tilt data-aos="fade-up" data-aos-delay="140">
+          <span class="glow-ring"></span>
+          <h3>Visualization</h3>
+          <p class="muted">Matplotlib, Plotly, Dash</p>
+        </div>
+        <div class="card" data-tilt data-aos="fade-up" data-aos-delay="210">
+          <span class="glow-ring"></span>
+          <h3>Tools</h3>
+          <p class="muted">LaTeX, Jupyter Notebook, VS Code, Git & GitHub</p>
+        </div>
+        <div class="card" data-tilt data-aos="fade-up" data-aos-delay="280">
+          <span class="glow-ring"></span>
+          <h3>Web & App</h3>
+          <p class="muted">React, Node.js, Express.js, HTML & CSS, Tailwind CSS</p>
+        </div>
+        <div class="card" data-tilt data-aos="fade-up" data-aos-delay="350">
+          <span class="glow-ring"></span>
+          <h3>Courses</h3>
+          <p class="muted">DSA, ML, Data Mining, Big Data for Visual Analytics, OS, OOP, Networks, DBMS</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Achievements -->
+  <section>
+    <div class="wrap">
+      <h2 class="title" style="font-size:34px">Scholastic Achievements</h2>
+      <div class="grid">
+        <div class="card" data-aos="fade-up">
+          <span class="glow-ring"></span>
+          <h3>GATE CS 2024</h3>
+          <p class="muted">All India Rank 957 — <a href="#" class="btn secondary" style="padding:6px 10px">Scorecard</a></p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="70">
+          <span class="glow-ring"></span>
+          <h3>GATE DA 2024</h3>
+          <p class="muted">All India Rank 4146 — <a href="#" class="btn secondary" style="padding:6px 10px">Scorecard</a></p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="140">
+          <span class="glow-ring"></span>
+          <h3>GATE CS 2023</h3>
+          <p class="muted">All India Rank 4481 — <a href="#" class="btn secondary" style="padding:6px 10px">Scorecard</a></p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="210">
+          <span class="glow-ring"></span>
+          <h3>BharatGen Hackathon</h3>
+          <p class="muted">IBPS & Namo‑Namah among top 14 projects — <a href="#" class="btn secondary" style="padding:6px 10px">Emails</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roles -->
+  <section>
+    <div class="wrap">
+      <h2 class="title" style="font-size:34px">Positions of Responsibility</h2>
+      <div class="grid">
+        <div class="card" data-aos="fade-up">
+          <span class="glow-ring"></span>
+          <h3>Teaching Assistant, IIT Kanpur</h3>
+          <p class="muted">Generative Artificial Intelligence (CS787) — Aug’25–Present</p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="80">
+          <span class="glow-ring"></span>
+          <h3>Teaching Assistant, IIT Kanpur</h3>
+          <p class="muted">Design and Analysis of Algorithms (CS602) — Aug’24–Dec’24</p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="160">
+          <span class="glow-ring"></span>
+          <h3>Student Guide, ICS IIT Kanpur</h3>
+          <p class="muted">Mentoring 6 freshmen; academic support — Jul’25–Present</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Links (as in resume) -->
+  <section id="links">
+    <div class="wrap">
+      <h2 class="title" style="font-size:34px">Resume Links (as provided)</h2>
+      <p class="muted">
+        <a href="#" class="btn secondary" style="padding:8px 12px">Github</a>
+        <a href="#" class="btn secondary" style="padding:8px 12px">LinkedIn</a>
+        <!-- Emails already linked above and in footer -->
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="card" data-aos="fade-up">
+        <span class="glow-ring"></span>
+        <h3>Contact</h3>
+        <p class="muted"><i class="ri-mail-line"></i> prav906715@gmail.com • <i class="ri-mail-line"></i> praveenp24@iitk.ac.in • <i class="ri-phone-line"></i> +91‑9794138647</p>
+        <div class="cta-row">
+          <a class="btn primary glow" href="mailto:praveenp24@iitk.ac.in">Email</a>
+          <a class="btn secondary" href="tel:+919794138647">Call</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap">
+      <div>© <span id="year"></span> Praveen Patel</div>
+      <div class="social">
+        <a href="#" title="Github"><i class="ri-github-line"></i></a>
+        <a href="#" title="LinkedIn"><i class="ri-linkedin-box-line"></i></a>
+        <a href="mailto:prav906715@gmail.com" title="Email"><i class="ri-mail-line"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
+
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // AOS init
+    AOS.init({ duration: 700, once: false, easing: 'ease-out-cubic' });
+
+    // Lenis smooth scroll
+    const lenis = new Lenis({ lerp: 0.08, wheelMultiplier: 1.0 });
+    function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+
+    // 3D tilt cards (lightweight)
+    const tiltTargets = document.querySelectorAll('[data-tilt]');
+    tiltTargets.forEach(card=>{
+      const max = Number(card.dataset.tiltMax || 8);
+      const speed = Number(card.dataset.tiltSpeed || 400);
+      let px=0, py=0, rx=0, ry=0, af;
+      const onMove = e=>{
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left, y = e.clientY - r.top;
+        px = (x/r.width - 0.5) * 2;
+        py = (y/r.height - 0.5) * 2;
+      };
+      const animate = ()=>{
+        rx += ((py * -max) - rx) * 0.08;
+        ry += (((px) * max) - ry) * 0.08;
+        card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+        af = requestAnimationFrame(animate);
+      };
+      const reset = ()=>{
+        cancelAnimationFrame(af);
+        card.style.transform = '';
+      };
+      card.addEventListener('mouseenter', ()=>{ animate(); });
+      card.addEventListener('mousemove', onMove);
+      card.addEventListener('mouseleave', reset);
+    });
+
+    // GSAP ScrollTrigger for Education timeline
+    gsap.registerPlugin(ScrollTrigger);
+
+    const eduSection = document.querySelector('#education');
+    const eduList = document.querySelectorAll('.edu-item');
+    const progressEl = document.getElementById('eduProgress');
+
+    // Pin the education section while scrubbing progress
+    ScrollTrigger.create({
+      trigger: eduSection,
+      start: 'top top+=80',
+      end: 'bottom+=60% top',
+      pin: '.timeline-sticky',
+      onUpdate: self=>{
+        const pct = (self.progress * 100);
+        progressEl.style.height = pct + '%';
+      }
+    });
+
+    // Reveal each item as it crosses center
+    eduList.forEach((item, i)=>{
+      ScrollTrigger.create({
+        trigger: item,
+        start: 'top center+=40',
+        onEnter: ()=> item.classList.add('active'),
+        onLeaveBack: ()=> item.classList.remove('active')
+      });
+    });
+
+    // Hero subtle floating portrait
+    gsap.to('.portrait', {
+      y: -8, duration: 2.2, yoyo: true, repeat: -1, ease:'sine.inOut'
+    });
+
+    // Magnetic buttons
+    document.querySelectorAll('.btn').forEach(btn=>{
+      let rect;
+      btn.addEventListener('mousemove', (e)=>{
+        rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width/2;
+        const y = e.clientY - rect.top - rect.height/2;
+        btn.style.transform = `translate(${x*0.07}px, ${y*0.07}px)`;
+      });
+      btn.addEventListener('mouseleave', ()=>btn.style.transform='');
+    });
+  </script>
+</body>
+</html>
